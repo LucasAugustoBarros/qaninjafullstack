@@ -1,9 +1,9 @@
 Dado('que acesso a página de cadastro') do
     visit "http://parodify.qaninja.com.br/"
-    find("div > div > a").click;
-  end
+    find("div > div > a").click
+end
   
-Quando('submeto o meu cadastro com:') do |table|
+Quando("submeto o meu cadastro com:") do |table|
   user = table.rows_hash
   removeUser user[:email];
   find("input[name='user[email]']").set user[:email];
@@ -12,11 +12,21 @@ Quando('submeto o meu cadastro com:') do |table|
   click_on "Cadastrar";
 end
   
-Então('devo ser redirecionado para a área logada') do
+Então("devo ser redirecionado para a área logada") do
   expect(page).to have_css '.dashboard';
 end
 
-Então('eu vejo a mensagem {string}') do |expect_message|
+Então("eu vejo a mensagem {string}") do |expect_message|
   alert = find("form#new_user p");
-  expect(alert.text).to eql expect_message
+  expect(alert.text).to eql expect_message;
+end
+
+Quando("acesso a página de cadastro") do
+  steps %(
+    Dado que acesso a página de cadastro
+  )
+end
+
+Então("deve exibir o seguinte css {string}") do |expect_css|
+  expect(page).to have_css expect_css;
 end
